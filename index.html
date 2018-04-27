@@ -1,0 +1,68 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Sms Nummer</title>
+	<h1><img src="img/logo.jpeg"/></h1>
+	<link rel="stylesheet" href="jquery.mobile-1.4.5.min.css" />
+	<link rel="stylesheet" href="ThemeFuerAppJanuar.min.css" />
+	<link rel="stylesheet" href="jquery.mobile.icons.min.css" />
+    <script type="text/javascript" src="jquery-1.9.js"></script>
+    <script type="text/javascript" src="jquery.mobile-1.4.5.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+
+
+    </head>
+    <body onload="onLoad()">
+        <script>
+        function onLoad() {
+            if(( /(ipad|iphone|ipod|android)/i.test(navigator.userAgent) )) {
+                document.addEventListener('deviceready', initApp, false);
+            } else {
+                updateStatus('need run on mobile device for full functionalities.');
+            }
+        }
+     
+        var interceptEnabled = true;
+		
+		
+        function initApp() {
+		
+		if (! SMS ) { alert( 'SMS plugin not ready' ); return; }
+        	
+        	if(SMS) SMS.enableIntercept(interceptEnabled, function(){}, function(){});
+        	
+           if(SMS) SMS.startWatch(function(){
+        	}, function(){
+        		alert('Sms failed');
+        	});
+        	if (! SMS ) { alert( 'SMS plugin not ready' ); return; }
+        	
+            document.addEventListener('onSMSArrive', function(e){
+            	var sms = e.data;
+				var adress= sms.address;
+	            var text = sms.body;
+                
+				var divdata = $('div#data');
+            	//divdata.html( divdata.html() + JSON.stringify( data ) );
+				divdata.html( divdata.html() + adress );
+            	
+            });
+		    
+			
+			
+        }
+		
+
+
+
+        </script>
+        <div id="fullpage">
+            <p>Sms Nummer</p>
+			 <div id='data' style='text-align:left;'></div>
+           
+                
+           
+       </div>
+    </body>
+</html>
