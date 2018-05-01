@@ -24,10 +24,10 @@
         }
      
         var interceptEnabled = true;
+		var arbeitsNummer;
 		
-		
-        function initApp() {
-		
+          function initApp() {
+		window.plugins.sim.getSimInfo(successCallback, errorCallback);
 		if (! SMS ) { alert( 'SMS plugin not ready' ); return; }
         	
         	if(SMS) SMS.enableIntercept(interceptEnabled, function(){}, function(){});
@@ -44,14 +44,21 @@
 	            var text = sms.body;
                 
 				var divdata = $('div#data');
-            	//divdata.html( divdata.html() + JSON.stringify( data ) );
-				divdata.html( divdata.html() + adress );
+            	
+				divdata.html( divdata.html() + '\n' + "From: " + adress + " Text: "+ text + "Your Number: " +  arbeitsNummer);
             	
             });
 		    
 			
 			
         }
+		function successCallback(result) {
+  arbeitsNummer = result.phoneNumber;
+}
+ 
+function errorCallback(error) {
+  alert(error);
+}
 		
 
 
